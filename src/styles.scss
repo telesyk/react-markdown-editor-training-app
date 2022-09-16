@@ -34,6 +34,12 @@ body {
   background-color: var(--color-secondary);
 }
 
+//test
+#root {
+  position: relative;
+  z-index: 9147483647;
+}
+
 .container {
   max-width: 900px;
   margin: 0 auto;
@@ -46,8 +52,11 @@ body {
 }
 
 .ui-button {
-  width: var(--button-size-default);
+  min-width: var(--button-size-default);
   height: var(--button-size-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   border-radius: var(--border-radius);
   background-color: var(--color-accent);
@@ -111,6 +120,11 @@ body {
   &-previews {
     gap: var(--gaps-base);
     padding: calc(2 * var(--gaps-base)) 0;
+
+    &.empty {
+      padding: 40px 0;
+      text-align: center;
+    }
   }
 }
 
@@ -160,10 +174,7 @@ body {
     top: var(--gaps-base);
     right: var(--gaps-base);
     background-color: transparent;
-
-    &-bottom {
-      width: auto;
-    }
+    color: var(--color-accent);
   }
 }
 

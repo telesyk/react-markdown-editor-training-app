@@ -6,8 +6,21 @@ export default {
       dateCreated: "13/09/2022, 10:50:21",
       dateModified: "13/09/2022, 11:34:21",
       title: "Eos hic aut accusamus expedita. Lorem, ipsum dolor",
-      content:
-        "Nesciunt neque quo explicabo fugiat quae quas animi nihil exercitationem. Corrupti dolores distinctio reiciendis doloremque, rem possimus! Eos hic aut accusamus expedita. Nesciunt neque quo explicabo fugiat quae quas animi nihil exercitationem. Corrupti dolores distinctio reiciendis doloremque, rem possimus! Eos hic aut accusamus expedita. Nesciunt neque quo explicabo fugiat quae quas animi nihil exercitationem. Corrupti dolores distinctio reiciendis doloremque, rem possimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit ea molestias doloremque labore a sequi reprehenderit nemo qui, voluptate inventore consectetur facilis recusandae dolores eius consequuntur? Corporis aperiam obcaecati pariatur!"
+      content: `
+### This just in!
+
+Markdown is an *awesome* way to write **very basic HTML** by typing manually
+
+It can be used for:
+
+1. README files
+1. Slack and Discord messages
+1. **So much more!**
+
+---
+
+Here's a division 👆
+`
     },
     {
       id: 2,
@@ -15,16 +28,14 @@ export default {
       dateModified: "13/09/2022, 19:34:21",
       title:
         "Nesciunt neque quo explicabo fugiat quae quas animi nihil exercitationem.",
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit ea molestias doloremque labore a sequi reprehenderit nemo qui, voluptate inventore consectetur facilis recusandae dolores eius consequuntur? Corporis aperiam obcaecati pariatur! Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit ea molestias doloremque labore a sequi reprehenderit nemo qui, voluptate inventore consectetur facilis recusandae dolores eius consequuntur? Corporis aperiam obcaecati pariatur!"
+      content:`### This just in! Note 2`
     },
     {
       id: 3,
       dateCreated: "13/09/2022, 10:50:21",
       dateModified: "13/09/2022, 11:34:21",
       title: "Eos hic aut accusamus expedita. Lorem, ipsum dolor",
-      content:
-        "Nesciunt neque quo explicabo fugiat quae quas animi nihil exercitationem. Corrupti dolores distinctio reiciendis doloremque, rem possimus! Eos hic aut accusamus expedita. Nesciunt neque quo explicabo fugiat quae quas animi nihil exercitationem. Corrupti dolores distinctio reiciendis doloremque, rem possimus! Eos hic aut accusamus expedita. Nesciunt neque quo explicabo fugiat quae quas animi nihil exercitationem. Corrupti dolores distinctio reiciendis doloremque, rem possimus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit ea molestias doloremque labore a sequi reprehenderit nemo qui, voluptate inventore consectetur facilis recusandae dolores eius consequuntur? Corporis aperiam obcaecati pariatur!"
+      content: `### This just in! Note 3`
     }
   ]
 };

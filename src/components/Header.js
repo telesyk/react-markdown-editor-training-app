@@ -3,11 +3,12 @@ import {
   faNoteSticky,
   faTableCellsLarge,
   faTableList,
-  faFilter
+  faFilter,
+  faPlus
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 
-const Header = ({ notesFilter, isGridView, handleViewClick }) => {
+const Header = ({ notesFilter, isGridView, isNotesLoaded, handleViewClick, handleAddNote }) => {
   const iconView = isGridView ? faTableList : faTableCellsLarge;
 
   return (
@@ -18,8 +19,9 @@ const Header = ({ notesFilter, isGridView, handleViewClick }) => {
           <FontAwesomeIcon icon={faNoteSticky} />
         </h1>
         <div className="app-header__controls">
+          <Button icon={faPlus} onClick={handleAddNote} />
           {notesFilter && <Button icon={faFilter} />}
-          <Button icon={iconView} onClick={handleViewClick} />
+          {isNotesLoaded && <Button icon={iconView} onClick={handleViewClick} />}
         </div>
       </div>
     </header>
