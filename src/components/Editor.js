@@ -37,9 +37,7 @@ const Editor = ({ note, handleClose, handleNoteUpdate }) => {
           />
         </div>
         <footer className="editor__footer">
-          <Button className="editor__close-bottom" onClick={handleClose}>
-            Save
-          </Button>
+          <Button className="editor__close-bottom" onClick={handleClose}>Back to list</Button>
         </footer>
       </article>
       <Button className="editor__close" onClick={handleClose} icon={faXmark} />
