@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faNoteSticky,
@@ -8,7 +9,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 
-const Header = ({ notesFilter, isGridView, isNotesLoaded, handleViewClick, handleAddNote }) => {
+const Header = ({
+  isGridView,
+  isNotesLoaded,
+  handleViewClick,
+  handleAddNote,
+  handleNotesFilter
+}) => {
   const iconView = isGridView ? faTableList : faTableCellsLarge;
 
   return (
@@ -20,7 +27,7 @@ const Header = ({ notesFilter, isGridView, isNotesLoaded, handleViewClick, handl
         </h1>
         <div className="app-header__controls">
           <Button icon={faPlus} onClick={handleAddNote} />
-          {notesFilter && <Button icon={faFilter} />}
+          <Button icon={faFilter} onClick={handleNotesFilter} />
           {isNotesLoaded && <Button icon={iconView} onClick={handleViewClick} />}
         </div>
       </div>
