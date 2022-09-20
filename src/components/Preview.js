@@ -5,13 +5,13 @@ import helpers from "../helpers";
 const {
   correctPreview,
   correctPreviewTitle,
-  convertDateToReadableFormat,
+  getReadableDateFormat,
 } = helpers;
 
 const Preview = ({ id, title, content, date, handleClick }) => {
   const correctedPreview = correctPreview(content);
   const correctedPreviewTitle = correctPreviewTitle(title);
-  const convertedDate = convertDateToReadableFormat(date);
+  const convertedDate = getReadableDateFormat(date);
 
   return (
     <article className="preview ui-editor" onClick={() => handleClick(id)}>

@@ -1,10 +1,11 @@
 const getNotesByDateModified = (notes) => {
-    return notes.sort((note1, note2)  =>  {
-        const noteDate1 = new Date(note1.dateModified).getUTCMilliseconds;
-        const noteDate2 = new Date(note2.dateModified).getUTCMilliseconds;
+    const sorted = notes.sort((note1, note2)  =>  {
+        const noteDate1 = Date.parse(note1.dateModified);
+        const noteDate2 = Date.parse(note2.dateModified);
 
         return noteDate1 - noteDate2;
     });
+    return sorted.reverse();
 };
 
 export default getNotesByDateModified;

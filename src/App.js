@@ -51,7 +51,7 @@ export default function App({ store }) {
   };
 
   const updateNote = (text) => {
-    const newDate = new Date().toLocaleString();
+    const newDate = new Date().toISOString();
     setNotes((prevNotes) =>
       prevNotes.map((note) => {
         return note.id === activeNoteId ? { 

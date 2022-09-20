@@ -1,6 +1,6 @@
 import getUserLocale from "./get-user-locale";
 
-const convertDateToReadableFormat = (isoStringDate) => {
+const getReadableDateFormat = (isoStringDate) => {
     const newDate = new Date(isoStringDate);
     const userLocale = getUserLocale();
     const options = {
@@ -12,4 +12,4 @@ const convertDateToReadableFormat = (isoStringDate) => {
     return newDate.toLocaleDateString(userLocale, options);
 };
 
-export default convertDateToReadableFormat;
+export default getReadableDateFormat;
