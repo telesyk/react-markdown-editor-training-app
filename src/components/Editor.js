@@ -3,7 +3,10 @@ import ReactMde from "react-mde";
 import ReactMarkdown from "react-markdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import helpers from "../helpers";
 import Button from "./Button";
+
+const { getDigitalDateFormat } = helpers;
 
 const Editor = ({ note, handleClose, handleNoteUpdate }) => {
   const { title, content, dateCreated, dateModified } = note;
@@ -15,10 +18,10 @@ const Editor = ({ note, handleClose, handleNoteUpdate }) => {
         <header className="editor__header">
           <div className="editor__header-date">
             <div className="editor__header-created">
-              <strong>Created</strong> <time>{dateCreated}</time>
+              <strong>Created</strong> <time>{getDigitalDateFormat(dateCreated)}</time>
             </div>
             <div className="editor__header-modified">
-              <strong>Modified</strong> <time>{dateModified}</time>
+              <strong>Modified</strong> <time>{getDigitalDateFormat(dateModified)}</time>
             </div>
           </div>
           <h1 className="editor__header-title">{title}</h1>

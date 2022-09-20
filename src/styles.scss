@@ -115,6 +115,11 @@ body {
     &__title svg {
       margin-left: 10px;
     }
+
+    &__controls {
+      display: flex;
+      gap: var(--gaps-base);
+    }
   }
 
   &-previews {

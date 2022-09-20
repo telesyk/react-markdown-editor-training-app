@@ -2,11 +2,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import helpers from "../helpers";
 
-const { correctPreview, correctPreviewTitle } = helpers;
+const {
+  correctPreview,
+  correctPreviewTitle,
+  getReadableDateFormat,
+} = helpers;
 
 const Preview = ({ id, title, content, date, handleClick }) => {
   const correctedPreview = correctPreview(content);
   const correctedPreviewTitle = correctPreviewTitle(title);
+  const convertedDate = getReadableDateFormat(date);
 
   return (
     <article className="preview ui-editor" onClick={() => handleClick(id)}>
@@ -16,7 +21,7 @@ const Preview = ({ id, title, content, date, handleClick }) => {
           <span className="preview__date-icon">
             <FontAwesomeIcon icon={faCalendarDays} />
           </span>
-          <time className="preview__date-text">{date}</time>
+          <time className="preview__date-text">{convertedDate}</time>
         </div>
       </header>
       <div className="preview__content">

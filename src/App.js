@@ -1,18 +1,25 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import constants from "./constants";
+import helpers from "./helpers";
 import Header from "./components/Header";
 import Preview from "./components/Preview";
 import Editor from "./components/Editor";
 import Button from "./components/Button";
 
 const EMPTY_TEXT = "Looks like you weren't create any notes, yet";
+const { FILTERS } = constants;
+const { getNotesByDateCreated, getNotesByDateModified } = helpers;
 
 export default function App({ store }) {
   const [notes, setNotes] = useState(store.notes || []);
   const [isGridView, setIsGridView] = useState(store.isGridView || true);
   const [isEditorOpened, setIsEditorOpened] = useState(false);
   const [activeNoteId, setActiveNoteId] = useState(null);
+  const [filteredByCreate, setFilteredByCreate] = useState(true);
+
+  const showDate = filteredByCreate ? FILTERS[0] : FILTERS[1];
 
   const viewClassName = isGridView ? "ui-view-grid" : "ui-view-list";
 
@@ -21,8 +28,8 @@ export default function App({ store }) {
     return note;
   };
 
-  const createNewNote = () => {
-    const newDate = new Date().toLocaleString();
+  const createNote = () => {
+    const newDate = new Date().toISOString();
 
     const newNote = {
       id: nanoid(),
@@ -44,7 +51,7 @@ export default function App({ store }) {
   };
 
   const updateNote = (text) => {
-    const newDate = new Date().toLocaleString();
+    const newDate = new Date().toISOString();
     setNotes((prevNotes) =>
       prevNotes.map((note) => {
         return note.id === activeNoteId ? { 
@@ -57,10 +64,21 @@ export default function App({ store }) {
   };
 
   const handleViewClick = () => setIsGridView((prevView) => !prevView);
+  
   const handleEditorClose = () => setIsEditorOpened((prevState) => !prevState);
+  
   const handleEditorOpen = (id) => {
     setIsEditorOpened((prevState) => !prevState);
     setActiveNoteId(id);
+  };
+
+  const handleNotesFilter = () => {
+    setNotes(prevNotes => 
+      filteredByCreate 
+      ? getNotesByDateModified(prevNotes)
+      : getNotesByDateCreated(prevNotes)
+    )
+    setFilteredByCreate(prevFilter => !prevFilter);
   };
 
   return (
@@ -69,7 +87,8 @@ export default function App({ store }) {
         isGridView={isGridView}
         isNotesLoaded={Boolean(notes.length > 0)}
         handleViewClick={handleViewClick}
-        handleAddNote={createNewNote}
+        handleAddNote={createNote}
+        handleNotesFilter={handleNotesFilter}
       />
 
       <div className="container">
@@ -77,13 +96,13 @@ export default function App({ store }) {
           notes.length > 0 
           ? 
           <div className={`app-previews ${viewClassName}`}>
-            {notes.map((item) => (
+            {notes.map((note) => (
               <Preview
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                content={item.content}
-                date={item.dateModified}
+                key={note.id}
+                id={note.id}
+                title={note.title}
+                content={note.content}
+                date={note[showDate]}
                 handleClick={handleEditorOpen}
               />
             ))}
@@ -91,7 +110,7 @@ export default function App({ store }) {
           : 
           <>
             <h1 className="app-previews empty">{EMPTY_TEXT}</h1>
-            <Button onClick={createNewNote} icon={faPlus}>Create Note</Button>
+            <Button onClick={createNote} icon={faPlus}>Create Note</Button>
           </>
         }
       </div>
