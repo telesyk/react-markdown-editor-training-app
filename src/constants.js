@@ -5,4 +5,6 @@ export default {
   LIMIT_PREVIEW_TITLE: 60,
 
   FILTERS: ["dateCreated", "dateModified"],
+
+  EMPTY_TEXT: "Pss! Looks like you don't have notes. Let's create one right now!",
 };

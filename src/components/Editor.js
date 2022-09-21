@@ -8,7 +8,12 @@ import Button from "./Button";
 
 const { getDigitalDateFormat } = helpers;
 
-const Editor = ({ note, handleClose, handleNoteUpdate }) => {
+const Editor = ({ 
+  note,
+  handleClose,
+  handleNoteUpdate,
+  captions
+}) => {
   const { title, content, dateCreated, dateModified } = note;
   const [selectedTab, setSelectedTab] = useState("write");
 
@@ -40,7 +45,7 @@ const Editor = ({ note, handleClose, handleNoteUpdate }) => {
           />
         </div>
         <footer className="editor__footer">
-          <Button className="editor__close-bottom" onClick={handleClose}>Back to list</Button>
+          <Button className="editor__close-bottom" onClick={handleClose}>{captions.returnButton}</Button>
         </footer>
       </article>
       <Button className="editor__close" onClick={handleClose} icon={faXmark} />

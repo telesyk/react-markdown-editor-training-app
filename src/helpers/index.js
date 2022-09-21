@@ -5,6 +5,7 @@ import getNotesByDateCreated from "./get-notes-by-date-created";
 import getNotesByDateModified from "./get-notes-by-date-modified";
 import getReadableDateFormat from "./get-readable-date-format";
 import getDigitalDateFormat from "./get-digital-date-format";
+import getStore from "./get-store";
 
 export default {
   correctPreview,
@@ -14,4 +15,5 @@ export default {
   getNotesByDateModified,
   getReadableDateFormat,
   getDigitalDateFormat,
+  getStore,
 };

@@ -8,12 +8,20 @@ import Preview from "./components/Preview";
 import Editor from "./components/Editor";
 import Button from "./components/Button";
 
-const EMPTY_TEXT = "Looks like you weren't create any notes, yet";
-const { FILTERS } = constants;
+const captions = {
+  newNote: {
+    title: "New note ",
+    content: "### This just in! Note ",
+  },
+  addButton: "New note",
+  returnButton: "Return to list"
+};
+
+const { FILTERS, EMPTY_TEXT } = constants;
 const { getNotesByDateCreated, getNotesByDateModified } = helpers;
 
 export default function App({ store }) {
-  const [notes, setNotes] = useState(store.notes || []);
+  const [notes, setNotes] = useState(store.notess || []);
   const [isGridView, setIsGridView] = useState(store.isGridView || true);
   const [isEditorOpened, setIsEditorOpened] = useState(false);
   const [activeNoteId, setActiveNoteId] = useState(null);
@@ -35,8 +43,8 @@ export default function App({ store }) {
       id: nanoid(),
       dateCreated: newDate,
       dateModified: newDate,
-      title: `New note ${notes.length + 1}`,
-      content: `### This just in! Note ${notes.length + 1}`
+      title: captions.newNote.title + (notes.length + 1),
+      content: captions.newNote.content + (notes.length + 1)
     };
     setNotes(prevNotes => [newNote, ...prevNotes]);
     setActiveNoteId(newNote.id);
@@ -81,6 +89,9 @@ export default function App({ store }) {
     setFilteredByCreate(prevFilter => !prevFilter);
   };
 
+  const isEmptyClass = !notes.length > 0 && "is-empty";
+  const mainBlockClass = "app-main container " + isEmptyClass
+
   return (
     <div className="app">
       <Header
@@ -91,7 +102,7 @@ export default function App({ store }) {
         handleNotesFilter={handleNotesFilter}
       />
 
-      <div className="container">
+      <main className={mainBlockClass}>
         {
           notes.length > 0 
           ? 
@@ -109,16 +120,17 @@ export default function App({ store }) {
           </div> 
           : 
           <>
-            <h1 className="app-previews empty">{EMPTY_TEXT}</h1>
-            <Button onClick={createNote} icon={faPlus}>Create Note</Button>
+            <h1 className="app-previews">{EMPTY_TEXT}</h1>
+            <Button onClick={createNote} icon={faPlus}>{captions.addButton}</Button>
           </>
         }
-      </div>
+      </main>
       {isEditorOpened && activeNoteId && (
         <Editor
           note={findActiveNote()}
           handleNoteUpdate={updateNote}
           handleClose={handleEditorClose}
+          captions={captions}
         />
       )}
     </div>
