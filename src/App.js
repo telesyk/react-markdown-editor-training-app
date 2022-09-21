@@ -18,14 +18,18 @@ const captions = {
 };
 
 const { FILTERS, EMPTY_TEXT } = constants;
-const { getNotesByDateCreated, getNotesByDateModified } = helpers;
+const { 
+  getNotesByDateCreated,
+  getNotesByDateModified,
+  setStore,
+} = helpers;
 
 export default function App({ store }) {
-  const [notes, setNotes] = useState(store.notess || []);
-  const [isGridView, setIsGridView] = useState(store.isGridView || true);
+  const [notes, setNotes] = useState(store.notes || []);
+  const [isGridView, setIsGridView] = useState(store.isGridView || false);
   const [isEditorOpened, setIsEditorOpened] = useState(false);
   const [activeNoteId, setActiveNoteId] = useState(null);
-  const [filteredByCreate, setFilteredByCreate] = useState(true);
+  const [filteredByCreate, setFilteredByCreate] = useState(store.filteredByCreate || false);
 
   const showDate = filteredByCreate ? FILTERS[0] : FILTERS[1];
 
@@ -46,29 +50,37 @@ export default function App({ store }) {
       title: captions.newNote.title + (notes.length + 1),
       content: captions.newNote.content + (notes.length + 1)
     };
-    setNotes(prevNotes => [newNote, ...prevNotes]);
+    
+    setNotes(prevNotes => {
+      const newNotes = [newNote, ...prevNotes];
+      setStore("notes", newNotes);
+      return newNotes;
+    });
     setActiveNoteId(newNote.id);
     setIsEditorOpened(prevState => !prevState);
     // console.log("create new note", newNote);
     /**
-     * create new Note
-     * set new Note to the state and update localStorage
-     * set new Note as active (by changing state for 'isEditorOpened')
-     * open modal with editor for new Note
+     * + create new Note
+     * + set new Note to the state 
+     * and update localStorage
+     * + set new Note as active (by changing state for 'isEditorOpened')
+     * + open modal with editor for new Note
      */
   };
 
   const updateNote = (text) => {
     const newDate = new Date().toISOString();
-    setNotes((prevNotes) =>
-      prevNotes.map((note) => {
+    setNotes((prevNotes) => {
+      const updatedNotes = prevNotes.map((note) => {
         return note.id === activeNoteId ? { 
           ...note, 
           dateModified: newDate, 
           content: text 
         } : note;
-      })
-    );
+      });
+      setStore("notes", updatedNotes);
+      return updatedNotes;
+    });
   };
 
   const handleViewClick = () => setIsGridView((prevView) => !prevView);
