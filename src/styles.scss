@@ -197,18 +197,34 @@ body {
 }
 
 .preview {
+  --button-delete-opacity: 0;
+
   background-color: var(--color-secondary);
   cursor: pointer;
   &:hover {
+    --button-delete-opacity: 1;
+    
     background-color: var(--color-secondary-minor);
   }
-
+  
   &__header {
     display: flex;
     flex-direction: var(--preview-flex-direction);
     gap: var(--gaps-base);
     padding: var(--gaps-base);
     color: var(--color-accent);
+    position: relative;
+  }
+
+  &__delete {
+    --button-icon-size-default: 16px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background-color: transparent;
+    color: var(--color-light);
+    opacity: var(--button-delete-opacity);
   }
 
   &__title {

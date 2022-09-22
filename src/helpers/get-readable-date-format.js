@@ -27,15 +27,15 @@ const getReadableDateFormat = (isoStringDate) => {
         case timeDiff >= moment && timeDiff < minute:
             return "few seconds ago";
         case timeDiff >= minute && timeDiff < minutes:
-            return "minute ago";
+            return "a minute ago";
         case timeDiff >= minutes && timeDiff < hour:
             return `${Math.round(timeDiff / minute)} minutes ago`;
         case timeDiff >= hour && timeDiff < hours:
-            return `hour ago`;
+            return `an hour ago`;
         case timeDiff >= hours && timeDiff < day:
             return `${Math.round(timeDiff / hour)} hours ago`;
         case timeDiff >= day && timeDiff < days:
-            return `about day ago`;
+            return `a day ago`;
         default:
             return newDate.toLocaleDateString(userLocale, options);
 

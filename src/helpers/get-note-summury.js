@@ -1,7 +1,7 @@
 import constants from "../constants";
 const { LIMIT_PREVIEW_TEXT } = constants;
 
-const correctPreview = (text) => {
+const getNoteSummury = (text) => {
   const cuttedPreview =
     text.length > LIMIT_PREVIEW_TEXT ? text.slice(0, LIMIT_PREVIEW_TEXT) : text;
   const dottedText =
@@ -12,4 +12,4 @@ const correctPreview = (text) => {
   return dottedText;
 };
 
-export default correctPreview;
+export default getNoteSummury;

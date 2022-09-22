@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import constants from "./constants";
@@ -11,6 +11,7 @@ import Button from "./components/Button";
 const captions = {
   newNote: {
     title: "New note ",
+    untitled: "Untitled ",
     content: "### This just in! Note ",
   },
   addButton: "New note",
@@ -22,18 +23,22 @@ const {
   getNotesByDateCreated,
   getNotesByDateModified,
   setStore,
+  getStore,
+  getNoteTitle,
 } = helpers;
 
-export default function App({ store }) {
-  const [notes, setNotes] = useState(store.notes || []);
-  const [isGridView, setIsGridView] = useState(store.isGridView || false);
+export default function App() {
+  const [notes, setNotes] = useState(
+    () => getStore("notes") || [] // run function for lazy state
+  );
+  const [isGridView, setIsGridView] = useState(true);
   const [isEditorOpened, setIsEditorOpened] = useState(false);
   const [activeNoteId, setActiveNoteId] = useState(null);
-  const [filteredByCreate, setFilteredByCreate] = useState(store.filteredByCreate || false);
+  const [filteredByCreate, setFilteredByCreate] = useState(false);
 
-  const showDate = filteredByCreate ? FILTERS[0] : FILTERS[1];
-
-  const viewClassName = isGridView ? "ui-view-grid" : "ui-view-list";
+  useEffect(() => {
+    setStore("notes", notes);
+  }, [notes]);
 
   const findActiveNote = () => {
     const note = notes.find((item) => item.id === activeNoteId);
@@ -51,36 +56,26 @@ export default function App({ store }) {
       content: captions.newNote.content + (notes.length + 1)
     };
     
-    setNotes(prevNotes => {
-      const newNotes = [newNote, ...prevNotes];
-      setStore("notes", newNotes);
-      return newNotes;
-    });
+    setNotes(prevNotes => [newNote, ...prevNotes]);
     setActiveNoteId(newNote.id);
     setIsEditorOpened(prevState => !prevState);
-    // console.log("create new note", newNote);
-    /**
-     * + create new Note
-     * + set new Note to the state 
-     * and update localStorage
-     * + set new Note as active (by changing state for 'isEditorOpened')
-     * + open modal with editor for new Note
-     */
   };
 
   const updateNote = (text) => {
     const newDate = new Date().toISOString();
-    setNotes((prevNotes) => {
-      const updatedNotes = prevNotes.map((note) => {
+    const splitedText = text.split("\n");
+    const newTitle = getNoteTitle(splitedText[0]);
+
+    setNotes((prevNotes) => 
+      prevNotes.map((note) => {
         return note.id === activeNoteId ? { 
           ...note, 
           dateModified: newDate, 
-          content: text 
+          content: text,
+          title: newTitle || captions.newNote.untitled + note.id
         } : note;
-      });
-      setStore("notes", updatedNotes);
-      return updatedNotes;
-    });
+      })
+    );
   };
 
   const handleViewClick = () => setIsGridView((prevView) => !prevView);
@@ -101,8 +96,19 @@ export default function App({ store }) {
     setFilteredByCreate(prevFilter => !prevFilter);
   };
 
+  const handleNoteDelete = (event, id) => {
+    event.stopPropagation();
+    
+    setNotes(prevNotes => prevNotes.filter(n => n.id !== id));
+  };
+
   const isEmptyClass = !notes.length > 0 && "is-empty";
-  const mainBlockClass = "app-main container " + isEmptyClass
+  const mainBlockClass = "app-main container " + isEmptyClass;
+  const viewClassName = isGridView ? "ui-view-grid" : "ui-view-list";
+  const showDate = filteredByCreate ? FILTERS[0] : FILTERS[1];
+  const filteredNotes = filteredByCreate 
+    ? getNotesByDateCreated(notes)
+    : getNotesByDateModified(notes);
 
   return (
     <div className="app">
@@ -119,7 +125,7 @@ export default function App({ store }) {
           notes.length > 0 
           ? 
           <div className={`app-previews ${viewClassName}`}>
-            {notes.map((note) => (
+            {filteredNotes.map((note) => (
               <Preview
                 key={note.id}
                 id={note.id}
@@ -127,6 +133,7 @@ export default function App({ store }) {
                 content={note.content}
                 date={note[showDate]}
                 handleClick={handleEditorOpen}
+                handleDelete={handleNoteDelete}
               />
             ))}
           </div> 
