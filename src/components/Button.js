@@ -1,14 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Button = ({ children, icon, className, onClick }) => {
-  const classes = !className ? "ui-button" : `ui-button ${className}`;
-  const handleClick = (e) => {
-    e.preventDefault();
-    return onClick();
-  };
+  const classes = 
+    `ui-button ${className ? className : ""} ${icon && !children ? "only-icon" : ""}`;
+
   return (
-    <button className={classes} onClick={handleClick}>
-      {children}
+    <button className={classes} onClick={onClick}>
+      {children && <span>{children}</span>}
       {icon && <FontAwesomeIcon icon={icon} />}
     </button>
   );

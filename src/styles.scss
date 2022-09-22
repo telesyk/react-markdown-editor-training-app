@@ -3,8 +3,8 @@
   --font-family-editor: "Open Sans", sans-serif;
   --gaps-base: 15px;
   --border-radius: 5px;
-  --button-size-default: 32px;
-  --button-icon-size-default: 20px;
+  --button-size-default: 42px;
+  --button-icon-size-default: 24px;
   --color-primary: #022C43;
   --color-secondary: #222831;
   --color-secondary-minor: #064663;
@@ -34,12 +34,6 @@ body {
   background-color: var(--color-secondary);
 }
 
-//test
-#root {
-  position: relative;
-  z-index: 9147483647;
-}
-
 .container {
   max-width: 900px;
   margin: 0 auto;
@@ -66,6 +60,20 @@ body {
   svg {
     width: var(--button-icon-size-default);
     height: var(--button-icon-size-default);
+  }
+
+  span + svg {
+    margin-left: calc(var(--gaps-base) / 2);
+  }
+
+  .is-empty & {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  &:not(.only-icon) {
+    padding-left: var(--gaps-base);
+    padding-right: var(--gaps-base);
   }
 }
 
@@ -122,14 +130,19 @@ body {
     }
   }
 
+  &-main {
+
+    &.is-empty {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
   &-previews {
     gap: var(--gaps-base);
     padding: calc(2 * var(--gaps-base)) 0;
-
-    &.empty {
-      padding: 40px 0;
-      text-align: center;
-    }
   }
 }
 
@@ -176,26 +189,42 @@ body {
 
   &__close {
     position: absolute;
-    top: var(--gaps-base);
-    right: var(--gaps-base);
+    top: 2px;
+    right: 2px;
     background-color: transparent;
     color: var(--color-accent);
   }
 }
 
 .preview {
+  --button-delete-opacity: 0;
+
   background-color: var(--color-secondary);
   cursor: pointer;
   &:hover {
+    --button-delete-opacity: 1;
+    
     background-color: var(--color-secondary-minor);
   }
-
+  
   &__header {
     display: flex;
     flex-direction: var(--preview-flex-direction);
     gap: var(--gaps-base);
     padding: var(--gaps-base);
     color: var(--color-accent);
+    position: relative;
+  }
+
+  &__delete {
+    --button-icon-size-default: 16px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background-color: transparent;
+    color: var(--color-light);
+    opacity: var(--button-delete-opacity);
   }
 
   &__title {
