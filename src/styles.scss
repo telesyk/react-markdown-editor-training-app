@@ -12,7 +12,6 @@
   --color-light: #eeeeee;
   --previews-display: flex;
   --previews-cell-width: calc(50% - var(--gaps-base) / 2);
-  --previews-grid-template: var(--previews-cell-width) var(--previews-cell-width) / var(--previews-cell-width) var(--previews-cell-width);
   --preview-flex-direction: column;
   --preview-date-time-width: auto;
   --preview-title-width: auto;
@@ -20,6 +19,7 @@
   --preview-title-font-size: 1rem;
   --preview-date-font-size: 0.625rem;
   --preview-content-font-size: 0.75rem;
+  --preview-delete-button-opacity: 0;
   --editor-header-date-display: block;
 }
 
@@ -79,10 +79,10 @@ body {
 
 .ui-view {
   &-grid {
-    display: grid;
-    grid-template: var(--previews-grid-template);
+    flex-wrap: wrap;
 
     .preview {
+      flex: 0 0 var(--previews-cell-width);
       border-radius: var(--border-radius);
       border: 3px solid var(--color-secondary-minor);
 
@@ -93,7 +93,6 @@ body {
   }
 
   &-list {
-    display: flex;
     flex-direction: column;
     --preview-title-font-size: 1.25rem;
     --preview-date-font-size: 0.75rem;
@@ -141,6 +140,7 @@ body {
   }
 
   &-previews {
+    display: flex;
     gap: var(--gaps-base);
     padding: calc(2 * var(--gaps-base)) 0;
   }
@@ -197,12 +197,10 @@ body {
 }
 
 .preview {
-  --button-delete-opacity: 0;
-
   background-color: var(--color-secondary);
   cursor: pointer;
   &:hover {
-    --button-delete-opacity: 1;
+    --preview-delete-button-opacity: 1;
     
     background-color: var(--color-secondary-minor);
   }
@@ -224,7 +222,7 @@ body {
     transform: translateY(-50%);
     background-color: transparent;
     color: var(--color-light);
-    opacity: var(--button-delete-opacity);
+    opacity: var(--preview-delete-button-opacity);
   }
 
   &__title {
@@ -262,7 +260,6 @@ body {
   :root {
     --previews-cell-prc: calc(100% / 3);
     --previews-cell-width: calc(var(--previews-cell-prc) - calc(var(--gaps-base) / 1.5));
-    --previews-grid-template: var(--previews-cell-width) var(--previews-cell-width) var(--previews-cell-width) / var(--previews-cell-width) var(--previews-cell-width) var(--previews-cell-width);
   }
   
   .ui-view-list {

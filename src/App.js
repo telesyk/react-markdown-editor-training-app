@@ -102,8 +102,8 @@ export default function App() {
     setNotes(prevNotes => prevNotes.filter(n => n.id !== id));
   };
 
-  const isEmptyClass = !notes.length > 0 && "is-empty";
-  const mainBlockClass = "app-main container " + isEmptyClass;
+  const isEmptyClass = !notes.length > 0 ? " is-empty" : "";
+  const mainBlockClass = "app-main container" + isEmptyClass;
   const viewClassName = isGridView ? "ui-view-grid" : "ui-view-list";
   const showDate = filteredByCreate ? FILTERS[0] : FILTERS[1];
   const filteredNotes = filteredByCreate 
